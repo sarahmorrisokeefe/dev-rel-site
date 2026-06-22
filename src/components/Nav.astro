@@ -1,0 +1,91 @@
+---
+---
+
+<nav
+  style="position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(12px); background:rgba(10,10,11,0.72); border-bottom:1px solid rgba(255,255,255,0.07);"
+>
+  <div
+    style="max-width:1120px; margin:0 auto; padding:0 32px; height:64px; display:flex; align-items:center; justify-content:space-between;"
+  >
+    <a
+      href="#top"
+      style="text-decoration:none; color:#fafafa; font-weight:600; font-size:16px; letter-spacing:-0.01em; display:flex; align-items:center; gap:10px;"
+    >
+      <span
+        style="width:9px; height:9px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent); flex:none;"
+      ></span>
+      Sarah O'Keefe
+    </a>
+
+    <!-- Desktop nav -->
+    <div class="desktop-nav" style="display:flex; align-items:center; gap:30px;">
+      <a href="#gap" class="nav-link">The gap</a>
+      <a href="#work" class="nav-link">How it works</a>
+      <a href="#process" class="nav-link">Process</a>
+      <a href="#about" class="nav-link">Why me</a>
+      <a href="#contact" class="nav-cta">Get in touch</a>
+    </div>
+
+    <!-- Mobile toggle -->
+    <button
+      id="hamburger"
+      class="mobile-toggle"
+      aria-label="Open navigation"
+      aria-expanded="false"
+      style="display:none; background:none; border:none; cursor:pointer; padding:8px; color:#ededed;"
+    >
+      <svg id="icon-open" width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <svg id="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none" style="display:none;">
+        <path d="M5 5l12 12M17 5L5 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu" class="mobile-menu" role="dialog" aria-label="Navigation">
+  <button
+    id="mobile-close"
+    aria-label="Close navigation"
+    style="position:absolute; top:20px; right:28px; background:none; border:none; cursor:pointer; color:#ededed; padding:8px;"
+  >
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+      <path d="M5 5l12 12M17 5L5 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <a href="#gap">The gap</a>
+  <a href="#work">How it works</a>
+  <a href="#process">Process</a>
+  <a href="#about">Why me</a>
+  <a href="#contact">Get in touch →</a>
+</div>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileClose = document.getElementById('mobile-close');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  function openMenu() {
+    mobileMenu?.classList.add('open');
+    hamburger?.setAttribute('aria-expanded', 'true');
+    if (iconOpen) iconOpen.style.display = 'none';
+    if (iconClose) iconClose.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    mobileMenu?.classList.remove('open');
+    hamburger?.setAttribute('aria-expanded', 'false');
+    if (iconOpen) iconOpen.style.display = 'block';
+    if (iconClose) iconClose.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  hamburger?.addEventListener('click', openMenu);
+  mobileClose?.addEventListener('click', closeMenu);
+  mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+</script>

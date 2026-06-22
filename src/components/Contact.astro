@@ -1,0 +1,163 @@
+---
+const email = 'devrel@okeefesarah.com';
+---
+
+<section
+  id="contact"
+  style="border-top:1px solid rgba(255,255,255,0.07); background:radial-gradient(110% 80% at 50% 120%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%);"
+>
+  <div
+    style="max-width:1120px; margin:0 auto; padding:104px 32px 120px;"
+    class="section-pad"
+  >
+    <div class="contact-grid" style="display:grid; grid-template-columns:1fr 1.1fr; gap:80px; align-items:start;">
+      <!-- Left: intro -->
+      <div>
+        <div
+          data-reveal
+          style="font-family:'Geist Mono',monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;"
+        >
+          Get in touch
+        </div>
+        <h2
+          data-reveal
+          style="font-weight:600; font-size:40px; line-height:1.1; letter-spacing:-0.03em; margin:0 0 20px; color:#fafafa;"
+        >
+          Tell me about your product.
+        </h2>
+        <p
+          data-reveal
+          style="font-size:17px; line-height:1.7; color:#9a9a9a; margin:0 0 28px; max-width:420px;"
+        >
+          Send a few lines about what you're building and where the developer experience hurts. I
+          read every message myself and reply personally, usually within a day or two.
+        </p>
+        <div data-reveal style="display:flex; flex-direction:column; gap:12px;">
+          <div style="font-size:14.5px; color:#8b8b8b;">Or email directly:</div>
+          <a href={`mailto:${email}`} class="email-link">{email}</a>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div
+        data-reveal
+        style="border:1px solid rgba(255,255,255,0.10); border-radius:18px; padding:32px; background:linear-gradient(180deg,#141416,#0d0d0f);"
+      >
+        <!-- Success state (hidden until form submits) -->
+        <div id="contact-success" style="display:none; text-align:center; padding:48px 16px;">
+          <div
+            style="width:48px; height:48px; border-radius:50%; margin:0 auto 20px; display:flex; align-items:center; justify-content:center; background:color-mix(in srgb, var(--accent) 16%, transparent); border:1px solid color-mix(in srgb, var(--accent) 36%, transparent); color:var(--accent); font-size:22px;"
+          >
+            ✓
+          </div>
+          <h3 style="font-weight:600; font-size:21px; margin:0 0 10px; color:#fafafa;">
+            Your email is ready to send.
+          </h3>
+          <p style="font-size:15px; line-height:1.6; color:#9a9a9a; margin:0;">
+            I've opened a draft in your mail app with everything filled in. Just hit send. Prefer
+            not to? Reach me at <span style="font-family:'Geist Mono',monospace; color:#ededed;"
+              >{email}</span
+            >.
+          </p>
+        </div>
+
+        <!-- Form state -->
+        <form id="contact-form">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+            <label style="display:flex; flex-direction:column; gap:7px;">
+              <span style="font-size:12.5px; color:#9a9a9a;">Name</span>
+              <input
+                name="name"
+                type="text"
+                required
+                placeholder="Your name"
+                class="form-input"
+              />
+            </label>
+            <label style="display:flex; flex-direction:column; gap:7px;">
+              <span style="font-size:12.5px; color:#9a9a9a;">Work email</span>
+              <input
+                name="email"
+                type="email"
+                required
+                placeholder="you@company.com"
+                class="form-input"
+              />
+            </label>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+            <label style="display:flex; flex-direction:column; gap:7px;">
+              <span style="font-size:12.5px; color:#9a9a9a;">Company</span>
+              <input
+                name="company"
+                type="text"
+                placeholder="Company / product"
+                class="form-input"
+              />
+            </label>
+            <label style="display:flex; flex-direction:column; gap:7px;">
+              <span style="font-size:12.5px; color:#9a9a9a;">I'm interested in</span>
+              <select name="interest" class="form-select">
+                <option>Launch Engagement</option>
+                <option>Ongoing Retainer</option>
+                <option>Docs Health Check</option>
+                <option>Not sure yet</option>
+              </select>
+            </label>
+          </div>
+
+          <label style="display:flex; flex-direction:column; gap:7px; margin-bottom:22px;">
+            <span style="font-size:12.5px; color:#9a9a9a;"
+              >What are you building, and where does the developer experience hurt?</span
+            >
+            <textarea
+              name="message"
+              rows="4"
+              required
+              placeholder="A couple of lines is plenty."
+              class="form-textarea"
+            ></textarea>
+          </label>
+
+          <button type="submit" class="form-submit">Send it my way →</button>
+          <div style="font-size:12.5px; color:#6f6f6f; text-align:center; margin-top:14px;">
+            Goes straight to my inbox. No newsletter, no funnel.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ email }}>
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('contact-success');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const name = (fd.get('name') || '').toString().trim();
+    const senderEmail = (fd.get('email') || '').toString().trim();
+    const company = (fd.get('company') || '').toString().trim();
+    const interest = (fd.get('interest') || '').toString().trim();
+    const message = (fd.get('message') || '').toString().trim();
+
+    const subject = `DevRel inquiry${company ? ': ' + company : name ? ': ' + name : ''}`;
+    const bodyLines = [
+      `Name: ${name}`,
+      `Email: ${senderEmail}`,
+      company ? `Company: ${company}` : null,
+      `Interested in: ${interest}`,
+      '',
+      message,
+    ].filter((l) => l !== null);
+
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+
+    if (form && success) {
+      form.style.display = 'none';
+      success.style.display = 'block';
+    }
+  });
+</script>

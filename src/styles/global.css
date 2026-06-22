@@ -281,7 +281,7 @@ textarea::placeholder {
 /* ─── Responsive ───────────────────────────────── */
 @media (max-width: 768px) {
   .desktop-nav {
-    display: none;
+    display: none !important;
   }
   .mobile-toggle {
     display: flex !important;
